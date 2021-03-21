@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snatdemoinner
+  namespace: snatdemo
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: snatdemoinner
+  template:
+    metadata:
+      labels:
+        app: snatdemoinner
+    spec:
+      containers:
+      - image: fredrkl/snatexhaustiondemo-internal:0.1.0
+        name: snatdemoinner
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+        - name: InternalCallBaseUri
+          value: "http://snatdemo.snatdemo.svc:8080"
+        securityContext:
+          allowPrivilegeEscalation: false
+      securityContext:
+        runAsUser: 2000
