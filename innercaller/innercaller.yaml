@@ -15,7 +15,7 @@ spec:
         app: snatdemoinner
     spec:
       containers:
-      - image: fredrkl/snatexhaustiondemo-internal:0.1.0
+      - image: fredrkl/snatexhaustiondemo-internal:0.1.0-wrong
         name: snatdemoinner
         resources:
           requests:
@@ -26,7 +26,7 @@ spec:
             cpu: "500m"
         env:
         - name: InternalCallBaseUri
-          value: "http://snatdemo.snatdemo.svc:8080/external"
+          value: "http://snatdemo.snatdemo.svc:8080/externalwrong"
         securityContext:
           allowPrivilegeEscalation: false
       securityContext:
