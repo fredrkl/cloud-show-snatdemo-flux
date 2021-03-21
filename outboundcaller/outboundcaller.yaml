@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snatdemo
+  namespace: snatdemo
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: snatdemo
+  template:
+    metadata:
+      labels:
+        app: snatdemo
+    spec:
+      containers:
+      - image: fredrkl/snatexhaustiondemo:0.3.0
+        name: snatdemo
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+        - name: AzureFunctionOptions__BaseUrl
+          valueFrom:
+            secretKeyRef:
+              name: externalcredentials
+              key: azureFunctionBaseUrl
+        - name: AzureFunctionOptions__xfunctionskey
+          valueFrom:
+            secretKeyRef:
+              name: externalcredentials
+              key: azureFunctionXFunctionsKey
+        securityContext:
+          allowPrivilegeEscalation: false
+      securityContext:
+        runAsUser: 2000
