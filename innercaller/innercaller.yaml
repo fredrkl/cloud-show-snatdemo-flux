@@ -4,7 +4,7 @@ metadata:
   name: snatdemoinner
   namespace: snatdemo
 spec:
-  replicas: 1
+  replicas: 3
   revisionHistoryLimit: 3
   selector:
     matchLabels:
